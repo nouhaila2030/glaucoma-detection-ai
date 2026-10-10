@@ -2,8 +2,10 @@
 """
 Module de sécurité médicale — GlaucomaAI
 Implémente :
-  - Chiffrement AES-256 via Fernet (cryptography)
-  - Gestion sécurisée des clés (env var + fichier .key)
+  - Chiffrement authentifié Fernet (AES-128-CBC + HMAC-SHA256)
+    Note : Fernet utilise AES-128 en mode CBC avec une signature HMAC-SHA256,
+    pas AES-256. Pour de l'AES-256, il faudrait utiliser AES-GCM 256 bits.
+  - Gestion sécurisée des clés (env var → fichier .key → auto-génération)
   - Audit logs JSON (conformité RGPD)
 """
 

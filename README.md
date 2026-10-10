@@ -1,4 +1,5 @@
-<div align="center">
+Détection du glaucome – IA + Sécurité médicale Python, PyTorch (MobileNetV3), chiffrement Fernet (AES-128-CBC + HMAC-SHA256), audit logs JSON (RGPD)
+• Détection par CNN sur images médicales ; chiffrement authentifié Fernet, gestion sécurisée des clés, audit logs JSON (conformité RGPD)<div align="center">
 
 <img src="https://img.shields.io/badge/Python-3.9-3776AB?style=for-the-badge&logo=python&logoColor=white" />
 <img src="https://img.shields.io/badge/FastAPI-0.128-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
@@ -40,6 +41,7 @@ It is built for ophthalmologists and medical teams who need fast, explainable AI
 | 🤖 **AI Chatbot** | GPT-4o clinical assistant for report drafting and differential diagnosis |
 | 🌍 **Multilingual** | Full UI in French 🇫🇷, English 🇬🇧, Spanish 🇪🇸, Arabic 🇸🇦 (RTL) |
 | 🔐 **Auth** | JWT-based authentication, bcrypt password hashing |
+| 🔒 **Security** | Fernet encryption (AES-128-CBC + HMAC-SHA256), JSON audit logs (GDPR), key management |
 | 🐳 **Docker** | One-command deployment with Docker Compose |
 
 ---
@@ -98,10 +100,13 @@ glaucoma_detection/
 │   └── uploads/                 # Orchestrator service (port 8000)
 │       ├── main.py              # Auth, patients, upload, history, chat routes
 │       ├── cleanup.py           # TTL-based image cleanup loop
+│       ├── security_manager.py  # Fernet encryption + JSON audit logger (GDPR)
 │       ├── .env                 # ⚠️  Secrets (not committed)
 │       ├── .env.example         # Template — copy to .env and fill in
 │       ├── Dockerfile
-│       └── requirements.txt
+│       ├── requirements.txt
+│       └── tests/
+│           └── test_security.py # 24 unit tests (encryption + audit logger)
 │
 └── frontend/                    # React SPA (port 3000 / 5173 dev)
     ├── src/
@@ -217,6 +222,7 @@ All runtime secrets for the orchestrator service are loaded from `backend/upload
 |---|---|---|---|
 | `OPENAI_API_KEY` | ✅ | — | OpenAI API key for the clinical chatbot (GPT-4o) |
 | `JWT_SECRET` | ✅ | — | Secret key used to sign JWT tokens |
+| `FERNET_KEY` | ❌ | auto-generated | Fernet key for medical image encryption. Generate with: `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` |
 | `DL_SERVICE_URL` | ❌ | `http://localhost:8001/analyze/` | DL service endpoint (overridden by Docker Compose to use service name) |
 | `CORS_ORIGINS` | ❌ | `http://localhost:5173,http://localhost:3000` | Comma-separated list of allowed frontend origins |
 
@@ -358,6 +364,21 @@ This project is released for academic and research purposes. For commercial depl
 
 ---
 
+## My Contribution
+
+I was in charge of the **security layer** of the platform:
+
+- **Encryption of medical images** with Fernet (authenticated symmetric encryption: AES-128-CBC + HMAC-SHA256). Images are stored encrypted at rest, decrypted temporarily for AI analysis, and the temporary file is deleted afterwards.
+- **Key management**: environment variable (`FERNET_KEY`) first, then a local key file (`.encryption.key`), with automatic generation on first start.
+- **JSON audit logging** of sensitive actions (signup, login, image upload, encryption/decryption, AI analysis, report generation, patient creation, access denied, security violations), designed to support GDPR traceability. Logs are rotated daily (`security_audit_YYYYMMDD.log`) and can be consulted through authenticated API endpoints (`GET /security/logs`).
+- **Access control**: per-user data isolation (each doctor only sees their own patients and analyses), upload validation (image and DICOM file types), restricted CORS origins.
+- **Data retention**: automatic cleanup of uploaded images after 3 days to limit exposure of medical data.
+- **Unit tests**: 24 tests covering encryption, decryption, tampering detection and all audit logger actions.
+
+> Note on Fernet: Fernet uses AES-128-CBC + HMAC-SHA256 (not AES-256). For AES-256, a custom AES-GCM implementation with a 256-bit key would be required.
+
+---
+
 <div align="center">
-  Built with ❤️ for ophthalmology professionals — <a href="https://github.com/sayouba2/glaucoma_detection">github.com/sayouba2/glaucoma_detection</a>
+  Built with ❤️ for ophthalmology professionals — <a href="https://github.com/nouhaila2030/glaucoma-detection-ai">github.com/nouhaila2030/glaucoma-detection-ai</a>
 </div>

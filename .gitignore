@@ -83,6 +83,8 @@ backend/uploads/uploaded_images/
 # Logs d'audit RGPD — données sensibles
 backend/uploads/logs/
 backend/security/logs/
+security_audit_*.log
+*.encrypted
 
 # ========== SYSTÈME ==========
 .DS_Store
