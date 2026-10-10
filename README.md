@@ -372,11 +372,9 @@ This project is released for academic and research purposes. For commercial depl
 
 This project was developed by a team as part of an Agile (Scrum) module project.
 
-| Member | GitHub | Role |
-|---|---|---|
-| Sayouba Ouedraogo | [@sayouba2](https://github.com/sayouba2) | AI model, DL API, GradCAM |
-| Kassimoune Bachir | [@KassimouneBachir](https://github.com/KassimouneBachir) | Frontend, 3D visualization, PDF reports |
-| Nouhaila El Hamal ⭐ | [@nouhaila2030](https://github.com/nouhaila2030) | Security layer (encryption, audit logs, key management) |
+- Sayouba Ouedraogo — [@sayouba2](https://github.com/sayouba2)
+- Kassimoune Bachir — [@KassimouneBachir](https://github.com/KassimouneBachir)
+- Nouhaila El Hamal — [@nouhaila2030](https://github.com/nouhaila2030)
 
 Original repository: [sayouba2/glaucoma_detection](https://github.com/sayouba2/glaucoma_detection)
 
@@ -392,8 +390,6 @@ I was in charge of the **security layer** of the platform:
 - **Access control**: per-user data isolation (each doctor only sees their own patients and analyses), upload validation (image and DICOM file types), restricted CORS origins.
 - **Data retention**: automatic cleanup of uploaded images after 3 days to limit exposure of medical data.
 - **Unit tests**: 24 tests covering encryption, decryption, tampering detection and all audit logger actions.
-
-> Note on Fernet: Fernet uses AES-128-CBC + HMAC-SHA256 (not AES-256). For AES-256, a custom AES-GCM implementation with a 256-bit key would be required.
 
 ---
 
