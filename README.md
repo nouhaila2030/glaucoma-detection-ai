@@ -376,8 +376,6 @@ This project was developed by a team as part of an Agile (Scrum) module project.
 - Kassimoune Bachir — [@KassimouneBachir](https://github.com/KassimouneBachir)
 - Nouhaila El Hamal — [@nouhaila2030](https://github.com/nouhaila2030)
 
-Original repository: [sayouba2/glaucoma_detection](https://github.com/sayouba2/glaucoma_detection)
-
 ---
 
 ## My Contribution
