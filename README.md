@@ -1,5 +1,5 @@
-Détection du glaucome – IA + Sécurité médicale Python, PyTorch (MobileNetV3), chiffrement Fernet (AES-128-CBC + HMAC-SHA256), audit logs JSON (RGPD)
-• Détection par CNN sur images médicales ; chiffrement authentifié Fernet, gestion sécurisée des clés, audit logs JSON (conformité RGPD)<div align="center">
+Python, PyTorch (MobileNetV3), Fernet encryption (AES-128-CBC + HMAC-SHA256), JSON audit logs (GDPR traceability)
+• AI glaucoma detection from retinal fundus images; authenticated Fernet encryption, secure key management, JSON audit logs (GDPR traceability)<div align="center">
 
 <img src="https://img.shields.io/badge/Python-3.9-3776AB?style=for-the-badge&logo=python&logoColor=white" />
 <img src="https://img.shields.io/badge/FastAPI-0.128-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
@@ -85,7 +85,7 @@ Input (224×224 RGB)
 ## Project Structure
 
 ```
-glaucoma_detection/
+glaucoma-detection-ai/
 ├── docker-compose.yml
 │
 ├── backend/
@@ -93,7 +93,7 @@ glaucoma_detection/
 │   │   ├── main.py              # /analyze/  /heatmap/  endpoints
 │   │   ├── model_utils.py       # MobileNetV3 + Attention + GradCAM classes
 │   │   ├── image_utils.py       # CLAHE preprocessing, tensor pipeline, heatmap export
-│   │   ├── best_model.pth       # ⚠️  Model weights (not committed — see below)
+│   │   ├── best_model.pth       # Trained model weights
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
 │   │
@@ -135,17 +135,13 @@ glaucoma_detection/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/sayouba2/glaucoma_detection.git
-cd glaucoma_detection
+git clone https://github.com/nouhaila2030/glaucoma-detection-ai.git
+cd glaucoma-detection-ai
 ```
 
-### 2. Add the model weights
+### 2. Model weights
 
-Place your `best_model.pth` file in `backend/DL_API/`:
-
-```bash
-cp /path/to/your/best_model.pth backend/DL_API/best_model.pth
-```
+The trained weights are included in `backend/DL_API/best_model.pth`. Replace this file to use your own model.
 
 ### 3. Configure environment variables
 
@@ -347,6 +343,14 @@ CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://your-domain.com
 
 ---
 
+## Known Limitations
+
+- **`POST /chat` and `POST /chat/guide` are unauthenticated.** These routes call GPT-4o and could allow any client to consume the OpenAI API key. A production deployment should protect them with `get_current_user()` like the rest of the API, or restrict access at the reverse-proxy level.
+- **Fernet uses AES-128-CBC**, not AES-256. For AES-256, a custom AES-GCM implementation with a 256-bit key would be required.
+- **The SQLite database** is not suitable for multi-instance production deployments. A PostgreSQL setup would be needed for horizontal scaling.
+
+---
+
 ## Contributing
 
 1. Fork the repository
@@ -361,6 +365,20 @@ Please ensure new backend code is covered by tests and new API endpoints are doc
 ## License
 
 This project is released for academic and research purposes. For commercial deployment in a clinical environment, please ensure compliance with applicable medical device regulations (MDR, FDA 510k, etc.) and validate model performance on your target population.
+
+---
+
+## Team
+
+This project was developed by a team as part of an Agile (Scrum) module project.
+
+| Member | GitHub | Role |
+|---|---|---|
+| Sayouba Ouedraogo | [@sayouba2](https://github.com/sayouba2) | AI model, DL API, GradCAM |
+| Kassimoune Bachir | [@KassimouneBachir](https://github.com/KassimouneBachir) | Frontend, 3D visualization, PDF reports |
+| Nouhaila El Hamal ⭐ | [@nouhaila2030](https://github.com/nouhaila2030) | Security layer (encryption, audit logs, key management) |
+
+Original repository: [sayouba2/glaucoma_detection](https://github.com/sayouba2/glaucoma_detection)
 
 ---
 
