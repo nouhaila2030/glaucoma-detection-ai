@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+python-dotenv
+python-multipart
+httpx
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+sqlalchemy
+openai
+email-validator
+aiofiles
+pydicom
+numpy
+pillow
+# ── Sécurité médicale (AES-256 Fernet + audit logs RGPD) ──
+cryptography>=42.0.0

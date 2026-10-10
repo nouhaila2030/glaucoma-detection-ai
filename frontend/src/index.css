@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --brand: #2563EB;
+  --brand-dark: #1D4ED8;
+  --brand-light: #EFF6FF;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --border: #E2E8F0;
+  --text-1: #0F172A;
+  --text-2: #475569;
+  --text-3: #94A3B8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--surface-2);
+  color: var(--text-1);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%       { transform: scale(1.4); opacity: 0.3; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.fade-up   { animation: fadeUp   0.45s cubic-bezier(0.16,1,0.3,1) both; }
+.fade-in   { animation: fadeIn   0.35s ease both; }
+.slide-down { animation: slideDown 0.25s ease both; }
+
+/* ── Gradient text utility ── */
+.gradient-text {
+  background: linear-gradient(135deg, #60A5FA, #38BDF8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Focus ring ── */
+*:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Input base ── */
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* ── Arabic font ── */
+.font-arabic {
+  font-family: 'Amiri', 'Scheherazade New', 'Times New Roman', serif;
+}
